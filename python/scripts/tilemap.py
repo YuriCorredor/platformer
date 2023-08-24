@@ -1,5 +1,18 @@
+import json
 import pygame
-from typing import Tuple, List
+from typing import Tuple
+
+AUTOTILE_MAP = {
+  tuple(sorted([(1, 0), (0, 1)])): 0,
+  tuple(sorted([(1, 0), (0, 1), (-1, 0)])): 1,
+  tuple(sorted([(-1, 0), (0, 1)])): 2,
+  tuple(sorted([(-1, 0), (0, -1), (0, 1)])): 3,
+  tuple(sorted([(-1, 0), (0, -1)])): 4,
+  tuple(sorted([(-1, 0), (0, -1), (1, 0)])): 5,
+  tuple(sorted([(1, 0), (0, -1)])): 6,
+  tuple(sorted([(1, 0), (0, -1), (0, 1)])): 7,
+  tuple(sorted([(1, 0), (-1, 0), (0, 1), (0, -1)])): 8,
+}
 
 NEIGHBOURS_OFFSET = [
   (-1, 0), (-1, 1), (0, -1),
@@ -8,6 +21,7 @@ NEIGHBOURS_OFFSET = [
   (1, 0), (1, 1), (0, 1)
 ]
 PHYSICS_TILES = {'grass', 'stone'}
+AUTOTILES_TYPES = {'grass', 'stone'}
 
 class Tilemap:
   def __init__(self, game, tile_size: int=16) -> None:
@@ -16,9 +30,32 @@ class Tilemap:
     self.tilemap = {}
     self.offgrid_tiles = []
 
-    for i in range(10):
-      self.tilemap[str(3 + i) + ';10'] = { 'type': 'grass', 'variant': 1, 'pos': (3 + i, 10) }
-      self.tilemap['10' + ';' + str(5 + i)] = { 'type': 'stone', 'variant': 1, 'pos': (10, 5 + i) }
+  def save(self, path: str) -> None:
+    f = open(path, 'w')
+    json.dump({'tilemap': self.tilemap, 'tile_size': self.tile_size, 'offgrid_tiles': self.offgrid_tiles}, f)
+    f.close()
+
+  def auto_tile(self) -> None:
+    for location in self.tilemap:
+      tile = self.tilemap[location]
+      neighbours = set()
+      for shift in [(1, 0), (-1, 0), (0, -1), (0, 1)]:
+        check_location = str(tile['pos'][0] + shift[0]) + ';' + str(tile['pos'][1] + shift[1])
+        if check_location in self.tilemap:
+          if self.tilemap[check_location]['type'] == tile['type']:
+            neighbours.add(shift)
+
+      neighbours = tuple(sorted(neighbours))
+      if tile['type'] in AUTOTILES_TYPES and neighbours in AUTOTILE_MAP:
+        tile['variant'] = AUTOTILE_MAP[neighbours]
+
+  def load(self, path: str) -> None:
+    f = open(path, 'r')
+    data = json.load(f)
+    self.tilemap = data['tilemap']
+    self.tile_size = data['tile_size']
+    self.offgrid_tiles = data['offgrid_tiles']
+    f.close()
 
   def tiles_around(self, position: Tuple[int, int]) -> list:
     tiles = []

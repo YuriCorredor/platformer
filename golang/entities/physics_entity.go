@@ -10,21 +10,20 @@ import (
 	"github.com/yuricorredor/platformer/types"
 )
 
-var Player = &PhysicsEntity{
-	EntityType: "player",
-	Position:   types.Vector{X: 0, Y: 0},
-	Velocity:   types.Vector{X: 0, Y: 0},
-	Collisions: types.Collisions{},
-}
-
 type PhysicsEntity struct {
 	EntityType string
 	Position   types.Vector
 	Velocity   types.Vector
 	Collisions types.Collisions
+	Action     string
+	Animations map[string]*Animation
+	Fliped     bool
+	AirTime    int
 }
 
 func (p *PhysicsEntity) Update() error {
+	p.Animations[p.Action].Update()
+
 	if p.EntityType == "player" {
 		p.HandlePlayerMovement()
 	}
@@ -32,11 +31,21 @@ func (p *PhysicsEntity) Update() error {
 	return nil
 }
 
+func (p *PhysicsEntity) SetAction(action string) {
+	p.Action = action
+}
+
 func (p *PhysicsEntity) Draw(screen *ebiten.Image, scrollX, scrollY int) {
 	if p.EntityType == "player" {
+		image := p.Animations[p.Action].Image()
+		imageOffset := p.Animations[p.Action].Offset
 		options := &ebiten.DrawImageOptions{}
-		options.GeoM.Translate(p.Position.X-float64(scrollX), p.Position.Y-float64(scrollY))
-		screen.DrawImage(assets.Assets.Images[p.EntityType][0], options)
+		if p.Fliped {
+			options.GeoM.Scale(-1, 1)
+			options.GeoM.Translate(float64(image.Bounds().Max.X), 0)
+		}
+		options.GeoM.Translate(p.Position.X-float64(scrollX)+imageOffset.X, p.Position.Y-float64(scrollY)+imageOffset.Y)
+		screen.DrawImage(image, options)
 	}
 }
 
@@ -109,6 +118,27 @@ func (p *PhysicsEntity) HandlePlayerMovement() {
 			}
 			p.Position.Y = entityRect.Y
 		}
+	}
+
+	if p.Collisions.Bottom {
+		p.AirTime = 0
+	} else {
+		p.AirTime++
+	}
+
+	if p.AirTime > 4 {
+		p.SetAction("jump")
+	} else if movement.X != 0 {
+		p.SetAction("run")
+	} else {
+		p.SetAction("idle")
+	}
+
+	if movement.X > 0 {
+		p.Fliped = false
+	}
+	if movement.X < 0 {
+		p.Fliped = true
 	}
 
 	p.Velocity.Y = math.Min(float64(3), float64(p.Velocity.Y)+0.1)

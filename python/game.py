@@ -51,6 +51,7 @@ class Game:
     self.player = Player(self, (50, 50), (8, 15))
 
     self.tilemap = Tilemap(self)
+    self.tilemap.load('map.json')
 
     self.scroll = [0, 0]
 
