@@ -160,11 +160,6 @@ func (e *Editor) RemoveTile() {
 }
 
 func (e *Editor) RemoveOffGridTile() {
-	// for tile in self.tilemap.offgrid_tiles.copy():
-	//         tile_img = self.assets[tile['type']][tile['variant']]
-	//         tile_rect = pygame.Rect(tile['pos'][0] - self.scroll[0], tile['pos'][1] - self.scroll[1], tile_img.get_width(), tile_img.get_height())
-	//         if tile_rect.collidepoint(mouse_pos):
-	//           self.tilemap.offgrid_tiles.remove(tile)
 	for _, tile := range tilemap.TileMap.OffGridTiles {
 		tile_image := assets.Assets.Images[tile.Type][tile.Variant]
 		tileRect := rects.Rect{
