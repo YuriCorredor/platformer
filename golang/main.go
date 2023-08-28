@@ -54,6 +54,7 @@ func main() {
 	ebiten.SetWindowTitle("Platformer")
 
 	gameClouds.GenerateRandomClouds()
+	tilemap.TileMap.Load("assets/maps/level1.json")
 
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)

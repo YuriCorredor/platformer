@@ -1,5 +1,7 @@
 package rects
 
+import "github.com/yuricorredor/platformer/types"
+
 type Rect struct {
 	X, Y, Width, Height float64
 }
@@ -46,4 +48,8 @@ func (r *Rect) CenterX() float64 {
 
 func (r *Rect) CenterY() float64 {
 	return r.Y + r.Height/2
+}
+
+func (r *Rect) Contains(point types.Vector) bool {
+	return point.X >= r.Left() && point.X <= r.Right() && point.Y >= r.Top() && point.Y <= r.Bottom()
 }

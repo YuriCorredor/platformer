@@ -1,6 +1,8 @@
 package tilemap
 
 import (
+	"encoding/json"
+	"os"
 	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -21,14 +23,12 @@ var (
 
 var TileMap = &TileMapType{
 	TileSize: 16,
-	Tiles:    random(),
 }
 
 type Vector = types.Vector
 
 type Tile struct {
 	Position types.Vector
-	Size     int
 	Variant  int
 	Type     string
 }
@@ -46,7 +46,7 @@ func (t *TileMapType) Update() error {
 func (t *TileMapType) Draw(screen *ebiten.Image, scrollX, scrollY int) {
 	for _, tile := range t.OffGridTiles {
 		options := &ebiten.DrawImageOptions{}
-		options.GeoM.Translate(tile.Position.X*float64(tile.Size)-float64(scrollX), tile.Position.Y*float64(tile.Size)-float64(scrollY))
+		options.GeoM.Translate(tile.Position.X*float64(t.TileSize)-float64(scrollX), tile.Position.Y*float64(t.TileSize)-float64(scrollY))
 		screen.DrawImage(assets.Assets.Images[tile.Type][tile.Variant], options)
 	}
 
@@ -58,7 +58,7 @@ func (t *TileMapType) Draw(screen *ebiten.Image, scrollX, scrollY int) {
 			location := strconv.Itoa(x) + ";" + strconv.Itoa(y)
 			if tile, ok := t.Tiles[location]; ok {
 				options := &ebiten.DrawImageOptions{}
-				options.GeoM.Translate(tile.Position.X*float64(tile.Size)-float64(scrollX), tile.Position.Y*float64(tile.Size)-float64(scrollY))
+				options.GeoM.Translate(tile.Position.X*float64(t.TileSize)-float64(scrollX), tile.Position.Y*float64(t.TileSize)-float64(scrollY))
 				screen.DrawImage(assets.Assets.Images[tile.Type][tile.Variant], options)
 			}
 		}
@@ -84,10 +84,10 @@ func (t *TileMapType) PhysicsRectsAroundPosition(position types.Vector) []rects.
 		for _, physicsTile := range PhysicsTiles {
 			if tile.Type == physicsTile {
 				rect := rects.Rect{
-					X:      tile.Position.X * float64(tile.Size),
-					Y:      tile.Position.Y * float64(tile.Size),
-					Width:  float64(tile.Size),
-					Height: float64(tile.Size),
+					X:      tile.Position.X * float64(t.TileSize),
+					Y:      tile.Position.Y * float64(t.TileSize),
+					Width:  float64(t.TileSize),
+					Height: float64(t.TileSize),
 				}
 
 				rectsList = append(rectsList, rect)
@@ -98,12 +98,85 @@ func (t *TileMapType) PhysicsRectsAroundPosition(position types.Vector) []rects.
 	return rectsList
 }
 
-func random() map[string]Tile {
-	tiles := map[string]Tile{}
-	for i := 0; i < 10; i++ {
-		tiles[strconv.Itoa(3+i)+";"+strconv.Itoa(10)] = Tile{Position: types.Vector{X: float64(3 + i), Y: 10}, Variant: 1, Type: "grass", Size: 16}
-		tiles[strconv.Itoa(10)+";"+strconv.Itoa(5+i)] = Tile{Position: types.Vector{X: 10, Y: float64(5 + i)}, Variant: 1, Type: "stone", Size: 16}
+func (t *TileMapType) SetTile(tile Tile) {
+	t.Tiles[strconv.Itoa(int(tile.Position.X))+";"+strconv.Itoa(int(tile.Position.Y))] = tile
+}
+
+func (t *TileMapType) RemoveTile(position types.Vector) {
+	delete(t.Tiles, strconv.Itoa(int(position.X))+";"+strconv.Itoa(int(position.Y)))
+}
+
+func (t *TileMapType) SetOffGridTile(tile Tile) {
+	t.OffGridTiles = append(t.OffGridTiles, tile)
+}
+
+func (t *TileMapType) RemoveOffGridTile(tile Tile) {
+	for i, offGridTile := range t.OffGridTiles {
+		if offGridTile.Position == tile.Position {
+			t.OffGridTiles = append(t.OffGridTiles[:i], t.OffGridTiles[i+1:]...)
+			break
+		}
+	}
+}
+
+func (t *TileMapType) ToJSONString() string {
+	jsonString, err := json.MarshalIndent(t, "", "")
+	if err != nil {
+		panic(err)
 	}
 
-	return tiles
+	return string(jsonString)
+}
+
+func (t *TileMapType) Save(path string) error {
+	// Create file if not exists
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		os.Create(path)
+	}
+
+	// Open file
+	f, err := os.OpenFile(path, os.O_RDWR, 0755)
+	if err != nil {
+		panic(err)
+	}
+
+	// Write to file
+	_, err = f.WriteString(t.ToJSONString())
+	if err != nil {
+		return err
+	}
+
+	// Close file
+	err = f.Close()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (t *TileMapType) Load(path string) error {
+	// Open file
+	f, err := os.OpenFile(path, os.O_RDWR, 0755)
+	if err != nil {
+		return err
+	}
+
+	// Read file
+	var tileMap TileMapType
+	err = json.NewDecoder(f).Decode(&tileMap)
+	if err != nil {
+		return err
+	}
+
+	// Close file
+	err = f.Close()
+	if err != nil {
+		return err
+	}
+
+	// Set tilemap
+	TileMap = &tileMap
+
+	return nil
 }

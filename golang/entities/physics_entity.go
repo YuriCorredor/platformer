@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/yuricorredor/platformer/assets"
 	"github.com/yuricorredor/platformer/rects"
 	"github.com/yuricorredor/platformer/tilemap"
@@ -80,7 +81,7 @@ func (p *PhysicsEntity) HandlePlayerMovement() {
 	if ebiten.IsKeyPressed(ebiten.KeyD) {
 		movement.X += 1
 	}
-	if ebiten.IsKeyPressed(ebiten.KeySpace) {
+	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		p.Jump()
 	}
 
