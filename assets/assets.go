@@ -24,6 +24,7 @@ const (
 	BackgroundPath      = BasePath + "background.png"
 	CloudsPath          = BasePath + "clouds/"
 	LeafsPath           = BasePath + "particles/leaf/"
+	ParticlePath        = BasePath + "particles/particle/"
 )
 
 var Assets = &AssetsType{
@@ -42,6 +43,7 @@ var Assets = &AssetsType{
 		"background":        load_image(BackgroundPath),
 		"clouds":            load_images(CloudsPath),
 		"particle_leaf":     load_images(LeafsPath),
+		"particle":          load_images(ParticlePath),
 	},
 }
 

@@ -16,7 +16,7 @@ var (
 		CloudImages: assets.Assets.Images["clouds"],
 		Count:       16,
 	}
-	leafs = &particle.LeafsType{}
+	leafs = &particle.Leafs{}
 )
 
 type Game struct {
@@ -30,6 +30,7 @@ func (g *Game) Update() error {
 	g.updateScrollPosition()
 	gameClouds.Update()
 	entities.Player.Update()
+	particle.DashParticles.Update()
 	leafs.Update()
 	return nil
 }
@@ -40,6 +41,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	gameClouds.Draw(screen, g.scollX, g.scrollY)
 	tilemap.TileMap.Draw(screen, g.scollX, g.scrollY)
 	entities.Player.Draw(screen, g.scollX, g.scrollY)
+	particle.DashParticles.Draw(screen, g.scollX, g.scrollY)
 	leafs.Draw(screen, g.scollX, g.scrollY)
 }
 
@@ -67,7 +69,7 @@ func main() {
 	ebiten.SetWindowTitle("Platformer")
 
 	gameClouds.GenerateRandomClouds()
-	leafs = particle.NewLeafs()
+	leafs = particle.CreateLeafs()
 
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
