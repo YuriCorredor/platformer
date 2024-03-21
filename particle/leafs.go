@@ -47,10 +47,14 @@ func CreateLeafs() *Leafs {
 		Spawners:  []rects.Rect{},
 	}
 
-	trees := tilemap.TileMap.Extract(types.Pair{
-		AssetType:    "large_decor",
-		AssetVariant: 2,
-	}, true)
+	tree_asset_pair := []types.Pair{
+		{
+			AssetType:    "large_decor",
+			AssetVariant: 2,
+		},
+	}
+
+	trees := tilemap.TileMap.Extract(tree_asset_pair, true)
 
 	for _, tree := range trees {
 		treeRect := rects.Rect{
@@ -74,9 +78,9 @@ func newLeaf(position types.Vector) *Particle {
 			X: -0.1,
 			Y: 0.3,
 		},
-		Frame: rand.Intn(len(assets.Assets.Images["particle_leaf"]) - 1),
+		Frame: rand.Intn(len(assets.Assets.Images["particle_leaf"].Image) - 1),
 		Animation: animation.Animation{
-			Images:        assets.Assets.Images["particle_leaf"],
+			Images:        assets.Assets.Images["particle_leaf"].Image,
 			ImageDuration: 20,
 			Loop:          false,
 			Done:          false,
