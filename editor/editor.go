@@ -37,14 +37,14 @@ func (e *Editor) Update() error {
 }
 
 func (e *Editor) Draw(screen *ebiten.Image) {
-	tilemap.TileMap.Draw(screen, e.scrollX, e.scrollY)
+	tilemap.TileMap.Draw(screen, e.scrollX, e.scrollY, "editor")
 
 	e.DrawLayout(screen)
 	e.DrawCurrentTile(screen)
 }
 
 func (e *Editor) CurrentTileImage() *ebiten.Image {
-	return assets.Assets.Images[e.tileList[e.tileGroup]][e.tileVariant]
+	return assets.Assets.Images[e.tileList[e.tileGroup]].Image[e.tileVariant]
 }
 
 func (e *Editor) DrawLayout(screen *ebiten.Image) {
@@ -114,14 +114,14 @@ func (e *Editor) HandleInputs() {
 	if ebiten.IsKeyPressed(ebiten.KeyShift) {
 		if yoff > 0 {
 			e.tileVariant++
-			if e.tileVariant >= len(assets.Assets.Images[e.tileList[e.tileGroup]]) {
+			if e.tileVariant >= len(assets.Assets.Images[e.tileList[e.tileGroup]].Image) {
 				e.tileVariant = 0
 			}
 		}
 		if yoff < 0 {
 			e.tileVariant--
 			if e.tileVariant < 0 {
-				e.tileVariant = len(assets.Assets.Images[e.tileList[e.tileGroup]]) - 1
+				e.tileVariant = len(assets.Assets.Images[e.tileList[e.tileGroup]].Image) - 1
 			}
 		}
 	} else {
@@ -161,7 +161,7 @@ func (e *Editor) RemoveTile() {
 
 func (e *Editor) RemoveOffGridTile() {
 	for _, tile := range tilemap.TileMap.OffGridTiles {
-		tile_image := assets.Assets.Images[tile.Type][tile.Variant]
+		tile_image := assets.Assets.Images[tile.Type].Image[tile.Variant]
 		tileRect := rects.Rect{
 			X:      tile.Position.X*float64(tilemap.TileMap.TileSize) - float64(e.scrollX),
 			Y:      tile.Position.Y*float64(tilemap.TileMap.TileSize) - float64(e.scrollY),
@@ -212,7 +212,7 @@ func main() {
 
 	tilemap.TileMap.Load(PATH)
 
-	editor.tileList = []string{"grass", "stone", "decor", "large_decor"}
+	editor.tileList = []string{"grass", "stone", "decor", "large_decor", "spawners"}
 
 	ebiten.SetCursorMode(ebiten.CursorModeHidden)
 	ebiten.SetWindowSize(640, 480)
