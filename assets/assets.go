@@ -28,27 +28,93 @@ const (
 )
 
 var Assets = &AssetsType{
-	Images: map[string][]*ebiten.Image{
-		"player":            load_image(PlayerPath),
-		"player_idle":       load_images(PlayerIdlePath),
-		"player_jump":       load_images(PlayerJumpPath),
-		"player_run":        load_images(PlayerRunPath),
-		"Player_slide":      load_images(PlayerSlidePath),
-		"player_wall_slide": load_images(PlayerWallSlidePath),
-		"decor":             load_images(DecorPath),
-		"grass":             load_images(GrassPath),
-		"large_decor":       load_images(LargeDecorPath),
-		"spawners":          load_images(SpawnersPath),
-		"stone":             load_images(StonePath),
-		"background":        load_image(BackgroundPath),
-		"clouds":            load_images(CloudsPath),
-		"particle_leaf":     load_images(LeafsPath),
-		"particle":          load_images(ParticlePath),
+	Images: map[string]Asset{
+		"player": {
+			Image:                load_image(PlayerPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"player_idle": {
+			Image:                load_images(PlayerIdlePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"player_jump": {
+			Image:                load_images(PlayerJumpPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"player_run": {
+			Image:                load_images(PlayerRunPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"player_slide": {
+			Image:                load_images(PlayerSlidePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"player_wall_slide": {
+			Image:                load_images(PlayerWallSlidePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"decor": {
+			Image:                load_images(DecorPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"grass": {
+			Image:                load_images(GrassPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"large_decor": {
+			Image:                load_images(LargeDecorPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"spawners": {
+			Image:                load_images(SpawnersPath),
+			ShouldRenderOnGame:   false,
+			ShouldRenderOnEditor: true,
+		},
+		"stone": {
+			Image:                load_images(StonePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"background": {
+			Image:                load_image(BackgroundPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"clouds": {
+			Image:                load_images(CloudsPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: false,
+		},
+		"particle_leaf": {
+			Image:                load_images(LeafsPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: false,
+		},
+		"particle": {
+			Image:                load_images(ParticlePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: false,
+		},
 	},
 }
 
+type Asset struct {
+	Image                []*ebiten.Image
+	ShouldRenderOnGame   bool
+	ShouldRenderOnEditor bool
+}
+
 type AssetsType struct {
-	Images map[string][]*ebiten.Image
+	Images map[string]Asset
 }
 
 func load_image(path string) []*ebiten.Image {
