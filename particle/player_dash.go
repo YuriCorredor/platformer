@@ -36,7 +36,7 @@ func CreateDashParticle(velocity types.Vector, position types.Vector) *Particle 
 		Velocity: velocity,
 		Frame:    rand.Intn(7),
 		Animation: animation.Animation{
-			Images:        assets.Assets.Images["particle"],
+			Images:        assets.Assets.Images["particle"].Image,
 			ImageDuration: 6,
 			Loop:          false,
 			Done:          false,
