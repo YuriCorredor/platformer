@@ -92,7 +92,7 @@ func (p *PlayerEntity) ResetCollisions() {
 }
 
 func (p *PlayerEntity) Size() (int, int) {
-	bounds := assets.Assets.Images[p.EntityType][0].Bounds()
+	bounds := assets.Assets.Images[p.EntityType].Image[0].Bounds()
 	return bounds.Max.X, bounds.Max.Y
 }
 
@@ -251,7 +251,7 @@ func (p *PlayerEntity) Update() error {
 
 var PlayerAnimations = map[string]*animation.Animation{
 	"idle": {
-		Images:        assets.Assets.Images["player_idle"],
+		Images:        assets.Assets.Images["player_idle"].Image,
 		ImageDuration: 6,
 		Loop:          true,
 		Done:          false,
@@ -261,7 +261,7 @@ var PlayerAnimations = map[string]*animation.Animation{
 		},
 	},
 	"run": {
-		Images:        assets.Assets.Images["player_run"],
+		Images:        assets.Assets.Images["player_run"].Image,
 		ImageDuration: 4,
 		Loop:          true,
 		Done:          false,
@@ -271,7 +271,7 @@ var PlayerAnimations = map[string]*animation.Animation{
 		},
 	},
 	"jump": {
-		Images:        assets.Assets.Images["player_jump"],
+		Images:        assets.Assets.Images["player_jump"].Image,
 		ImageDuration: 5,
 		Loop:          false,
 		Done:          false,
@@ -281,7 +281,7 @@ var PlayerAnimations = map[string]*animation.Animation{
 		},
 	},
 	"slide": {
-		Images:        assets.Assets.Images["player_slide"],
+		Images:        assets.Assets.Images["player_slide"].Image,
 		ImageDuration: 5,
 		Loop:          false,
 		Done:          false,
@@ -291,7 +291,7 @@ var PlayerAnimations = map[string]*animation.Animation{
 		},
 	},
 	"wall_slide": {
-		Images:        assets.Assets.Images["player_wall_slide"],
+		Images:        assets.Assets.Images["player_wall_slide"].Image,
 		ImageDuration: 5,
 		Loop:          false,
 		Done:          false,
