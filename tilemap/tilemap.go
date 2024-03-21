@@ -43,11 +43,21 @@ func (t *TileMapType) Update() error {
 	return nil
 }
 
-func (t *TileMapType) Draw(screen *ebiten.Image, scrollX, scrollY int) {
+func (t *TileMapType) Draw(screen *ebiten.Image, scrollX, scrollY int, renderContext string) {
 	for _, tile := range t.OffGridTiles {
 		options := &ebiten.DrawImageOptions{}
 		options.GeoM.Translate(tile.Position.X*float64(t.TileSize)-float64(scrollX), tile.Position.Y*float64(t.TileSize)-float64(scrollY))
-		screen.DrawImage(assets.Assets.Images[tile.Type][tile.Variant], options)
+
+		var shouldRender bool
+		if renderContext == "game" {
+			shouldRender = assets.Assets.Images[tile.Type].ShouldRenderOnGame
+		} else if renderContext == "editor" {
+			shouldRender = assets.Assets.Images[tile.Type].ShouldRenderOnEditor
+		}
+
+		if shouldRender {
+			screen.DrawImage(assets.Assets.Images[tile.Type].Image[tile.Variant], options)
+		}
 	}
 
 	screenWidth := screen.Bounds().Max.X
@@ -59,7 +69,17 @@ func (t *TileMapType) Draw(screen *ebiten.Image, scrollX, scrollY int) {
 			if tile, ok := t.Tiles[location]; ok {
 				options := &ebiten.DrawImageOptions{}
 				options.GeoM.Translate(tile.Position.X*float64(t.TileSize)-float64(scrollX), tile.Position.Y*float64(t.TileSize)-float64(scrollY))
-				screen.DrawImage(assets.Assets.Images[tile.Type][tile.Variant], options)
+
+				var shouldRender bool
+				if renderContext == "game" {
+					shouldRender = assets.Assets.Images[tile.Type].ShouldRenderOnGame
+				} else if renderContext == "editor" {
+					shouldRender = assets.Assets.Images[tile.Type].ShouldRenderOnEditor
+				}
+
+				if shouldRender {
+					screen.DrawImage(assets.Assets.Images[tile.Type].Image[tile.Variant], options)
+				}
 			}
 		}
 	}
@@ -98,27 +118,29 @@ func (t *TileMapType) PhysicsRectsAroundPosition(position types.Vector) []rects.
 	return rectsList
 }
 
-func (t *TileMapType) Extract(pair types.Pair, keep bool) []Tile {
+func (t *TileMapType) Extract(pairs []types.Pair, keep bool) []Tile {
 	matches := []Tile{}
 
-	for _, tile := range t.OffGridTiles {
-		if tile.Type == pair.AssetType && tile.Variant == pair.AssetVariant {
-			matches = append(matches, tile)
-			if !keep {
-				t.RemoveOffGridTile(tile)
+	for _, pair := range pairs {
+		for _, tile := range t.OffGridTiles {
+			if tile.Type == pair.AssetType && tile.Variant == pair.AssetVariant {
+				matches = append(matches, tile)
+				if !keep {
+					t.RemoveOffGridTile(tile)
+				}
 			}
 		}
-	}
 
-	for _, tile := range t.Tiles {
-		if tile.Type == pair.AssetType && tile.Variant == pair.AssetVariant {
-			toAppend := tile
-			toAppend.Position.X *= float64(t.TileSize)
-			toAppend.Position.Y *= float64(t.TileSize)
-			matches = append(matches, toAppend)
+		for _, tile := range t.Tiles {
+			if tile.Type == pair.AssetType && tile.Variant == pair.AssetVariant {
+				toAppend := tile
+				toAppend.Position.X *= float64(t.TileSize)
+				toAppend.Position.Y *= float64(t.TileSize)
+				matches = append(matches, toAppend)
 
-			if !keep {
-				t.RemoveTile(types.Vector{X: tile.Position.X, Y: tile.Position.Y})
+				if !keep {
+					t.RemoveTile(types.Vector{X: tile.Position.X, Y: tile.Position.Y})
+				}
 			}
 		}
 	}
