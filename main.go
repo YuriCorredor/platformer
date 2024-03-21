@@ -9,11 +9,12 @@ import (
 	"github.com/yuricorredor/platformer/entities"
 	"github.com/yuricorredor/platformer/particle"
 	"github.com/yuricorredor/platformer/tilemap"
+	"github.com/yuricorredor/platformer/types"
 )
 
 var (
 	gameClouds = &clouds.CloudsType{
-		CloudImages: assets.Assets.Images["clouds"],
+		CloudImages: assets.Assets.Images["clouds"].Image,
 		Count:       16,
 	}
 	leafs = &particle.Leafs{}
@@ -36,10 +37,10 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	screen.DrawImage(assets.Assets.Images["background"][0], nil)
+	screen.DrawImage(assets.Assets.Images["background"].Image[0], nil)
 
 	gameClouds.Draw(screen, g.scollX, g.scrollY)
-	tilemap.TileMap.Draw(screen, g.scollX, g.scrollY)
+	tilemap.TileMap.Draw(screen, g.scollX, g.scrollY, "game")
 	entities.Player.Draw(screen, g.scollX, g.scrollY)
 	particle.DashParticles.Draw(screen, g.scollX, g.scrollY)
 	leafs.Draw(screen, g.scollX, g.scrollY)
@@ -70,6 +71,23 @@ func main() {
 
 	gameClouds.GenerateRandomClouds()
 	leafs = particle.CreateLeafs()
+
+	for _, spawner := range tilemap.TileMap.Extract([]types.Pair{
+		{
+			AssetType:    "spawners",
+			AssetVariant: 0,
+		},
+		{
+			AssetType:    "spawners",
+			AssetVariant: 1,
+		},
+	}, true) {
+		if spawner.Variant == 0 {
+			entities.Player.Position = spawner.Position
+		} else {
+			log.Printf(spawner.Type)
+		}
+	}
 
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
