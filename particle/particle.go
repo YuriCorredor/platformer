@@ -3,6 +3,7 @@ package particle
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/yuricorredor/platformer/animation"
+	"github.com/yuricorredor/platformer/rects"
 	"github.com/yuricorredor/platformer/types"
 )
 
@@ -13,10 +14,21 @@ type ParticleI interface {
 
 type Particle struct {
 	Type      string
+	Angle     float64
 	Position  types.Vector
 	Velocity  types.Vector
 	Frame     int
 	Animation animation.Animation
+}
+
+func (p *Particle) Size() (int, int) {
+	bounds := p.Animation.Images[0].Bounds()
+	return bounds.Max.X, bounds.Max.Y
+}
+
+func (p *Particle) Rect() rects.Rect {
+	width, height := p.Size()
+	return rects.Rect{X: p.Position.X, Y: p.Position.Y, Width: float64(width), Height: float64(height)}
 }
 
 func (p *Particle) Update() bool {
