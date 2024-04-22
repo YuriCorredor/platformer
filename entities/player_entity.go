@@ -21,7 +21,7 @@ type PlayerEntity struct {
 	Collisions types.Collisions
 	Action     string
 	Animations map[string]*animation.Animation
-	Fliped     bool
+	Flipped    bool
 	AirTime    int
 	Jumps      int
 	WallSlide  bool
@@ -35,7 +35,7 @@ func (p *PlayerEntity) Draw(screen *ebiten.Image, scrollX, scrollY int) {
 	image := p.Animations[p.Action].Image()
 	imageOffset := p.Animations[p.Action].Offset
 	options := &ebiten.DrawImageOptions{}
-	if p.Fliped {
+	if p.Flipped {
 		options.GeoM.Scale(-1, 1)
 		options.GeoM.Translate(float64(image.Bounds().Max.X), 0)
 	}
@@ -51,13 +51,13 @@ func (p *PlayerEntity) Jump() bool {
 	var jumped = false
 
 	if p.WallSlide {
-		if p.Fliped && ebiten.IsKeyPressed(ebiten.KeyA) {
+		if p.Flipped && ebiten.IsKeyPressed(ebiten.KeyA) {
 			p.Velocity.X = 3.5
 			p.Velocity.Y = -2.5
 			p.AirTime = 5
 			p.Jumps = int(math.Max(0, float64(p.Jumps-1)))
 			jumped = true
-		} else if !p.Fliped && ebiten.IsKeyPressed(ebiten.KeyD) {
+		} else if !p.Flipped && ebiten.IsKeyPressed(ebiten.KeyD) {
 			p.Velocity.X = -3.5
 			p.Velocity.Y = -2.5
 			p.AirTime = 5
@@ -76,7 +76,7 @@ func (p *PlayerEntity) Jump() bool {
 
 func (p *PlayerEntity) Dash() {
 	if p.Dashing == 0 {
-		if p.Fliped {
+		if p.Flipped {
 			p.Dashing = -60
 		} else {
 			p.Dashing = 60
@@ -126,7 +126,7 @@ func (p *PlayerEntity) Update() error {
 	rectsList := tilemap.TileMap.PhysicsRectsAroundPosition(p.Position)
 	entityRect := p.Rect()
 	for _, rect := range rectsList {
-		if entityRect.Coliderect(rect) {
+		if entityRect.Colliderect(rect) {
 			if frameMovement.X > 0 {
 				entityRect.SetRight(rect.Left())
 				p.Collisions.Right = true
@@ -143,7 +143,7 @@ func (p *PlayerEntity) Update() error {
 	rectsList = tilemap.TileMap.PhysicsRectsAroundPosition(p.Position)
 	entityRect = p.Rect()
 	for _, rect := range rectsList {
-		if entityRect.Coliderect(rect) {
+		if entityRect.Colliderect(rect) {
 			if frameMovement.Y > 0 {
 				entityRect.SetBottom(rect.Top())
 				p.Collisions.Bottom = true
@@ -167,9 +167,9 @@ func (p *PlayerEntity) Update() error {
 		p.WallSlide = true
 		p.Velocity.Y = math.Min(float64(p.Velocity.Y), 0.5)
 		if p.Collisions.Right {
-			p.Fliped = false
+			p.Flipped = false
 		} else {
-			p.Fliped = true
+			p.Flipped = true
 		}
 	} else {
 		p.WallSlide = false
@@ -228,10 +228,10 @@ func (p *PlayerEntity) Update() error {
 	}
 
 	if movement.X > 0 {
-		p.Fliped = false
+		p.Flipped = false
 	}
 	if movement.X < 0 {
-		p.Fliped = true
+		p.Flipped = true
 	}
 
 	if p.Velocity.X > 0 {
