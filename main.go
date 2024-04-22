@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/yuricorredor/platformer/assets"
@@ -17,7 +18,8 @@ var (
 		CloudImages: assets.Assets.Images["clouds"].Image,
 		Count:       16,
 	}
-	leafs = &particle.Leafs{}
+	leafs   = &particle.Leafs{}
+	enemies = []*entities.EnemyEntity{}
 )
 
 type Game struct {
@@ -31,7 +33,14 @@ func (g *Game) Update() error {
 	g.updateScrollPosition()
 	gameClouds.Update()
 	entities.Player.Update()
+
+	for _, enemy := range enemies {
+		enemy.Update()
+	}
+
 	particle.DashParticles.Update()
+	particle.Projectiles.Update(entities.Player.Dashing, entities.Player.Rect())
+	particle.SparksParticles.Update()
 	leafs.Update()
 	return nil
 }
@@ -42,7 +51,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	gameClouds.Draw(screen, g.scollX, g.scrollY)
 	tilemap.TileMap.Draw(screen, g.scollX, g.scrollY, "game")
 	entities.Player.Draw(screen, g.scollX, g.scrollY)
+
+	for _, enemy := range enemies {
+		enemy.Draw(screen, g.scollX, g.scrollY)
+	}
+
 	particle.DashParticles.Draw(screen, g.scollX, g.scrollY)
+	particle.Projectiles.Draw(screen, g.scollX, g.scrollY)
+	particle.SparksParticles.Draw(screen, g.scollX, g.scrollY)
 	leafs.Draw(screen, g.scollX, g.scrollY)
 }
 
@@ -58,16 +74,14 @@ func (g *Game) updateScrollPosition() {
 	g.scrollY += (int(playerRect.CenterY()) - g.screenHeight/2 - g.scrollY) / 15
 }
 
-func (g *Game) loadMap(mapName string) {
-	tilemap.TileMap.Load("assets/data/maps/" + mapName + ".json")
-}
+func (g *Game) loadMap(mapId int) {
+	tilemap.TileMap.Load("assets/data/maps/" + strconv.Itoa(mapId) + ".json")
 
-func main() {
-	game := &Game{}
-	game.loadMap("0")
-
-	ebiten.SetWindowSize(640, 480)
-	ebiten.SetWindowTitle("Platformer")
+	gameClouds = &clouds.CloudsType{
+		CloudImages: assets.Assets.Images["clouds"].Image,
+		Count:       16,
+	}
+	enemies = []*entities.EnemyEntity{}
 
 	gameClouds.GenerateRandomClouds()
 	leafs = particle.CreateLeafs()
@@ -85,9 +99,17 @@ func main() {
 		if spawner.Variant == 0 {
 			entities.Player.Position = spawner.Position
 		} else {
-			log.Printf(spawner.Type)
+			enemies = append(enemies, entities.CreateEnemy(spawner.Position))
 		}
 	}
+}
+
+func main() {
+	game := &Game{}
+	game.loadMap(0)
+
+	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowTitle("Platformer")
 
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
