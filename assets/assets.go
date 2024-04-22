@@ -16,6 +16,9 @@ const (
 	PlayerRunPath       = BasePath + "entities/player/run/"
 	PlayerSlidePath     = BasePath + "entities/player/slide/"
 	PlayerWallSlidePath = BasePath + "entities/player/wall_slide/"
+	EnemyPath           = BasePath + "entities/enemy.png"
+	EnemyIdlePath       = BasePath + "entities/enemy/idle"
+	EnemyRunPath        = BasePath + "entities/enemy/run"
 	DecorPath           = BasePath + "tiles/decor/"
 	GrassPath           = BasePath + "tiles/grass/"
 	LargeDecorPath      = BasePath + "tiles/large_decor/"
@@ -25,6 +28,8 @@ const (
 	CloudsPath          = BasePath + "clouds/"
 	LeafsPath           = BasePath + "particles/leaf/"
 	ParticlePath        = BasePath + "particles/particle/"
+	GunPath             = BasePath + "gun.png"
+	ProjectilePath      = BasePath + "projectile.png"
 )
 
 var Assets = &AssetsType{
@@ -56,6 +61,21 @@ var Assets = &AssetsType{
 		},
 		"player_wall_slide": {
 			Image:                load_images(PlayerWallSlidePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"enemy": {
+			Image:                load_images(EnemyPath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"enemy_idle": {
+			Image:                load_images(EnemyIdlePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: true,
+		},
+		"enemy_run": {
+			Image:                load_images(EnemyRunPath),
 			ShouldRenderOnGame:   true,
 			ShouldRenderOnEditor: true,
 		},
@@ -101,6 +121,16 @@ var Assets = &AssetsType{
 		},
 		"particle": {
 			Image:                load_images(ParticlePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: false,
+		},
+		"projectile": {
+			Image:                load_images(ProjectilePath),
+			ShouldRenderOnGame:   true,
+			ShouldRenderOnEditor: false,
+		},
+		"gun": {
+			Image:                load_images(GunPath),
 			ShouldRenderOnGame:   true,
 			ShouldRenderOnEditor: false,
 		},
