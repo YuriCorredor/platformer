@@ -118,6 +118,20 @@ func (t *TileMapType) PhysicsRectsAroundPosition(position types.Vector) []rects.
 	return rectsList
 }
 
+func (t *TileMapType) CheckForSolid(position types.Vector) bool {
+	tileLoc := types.Vector{X: position.X / float64(t.TileSize), Y: position.Y / float64(t.TileSize)}
+	location := strconv.Itoa(int(tileLoc.X)) + ";" + strconv.Itoa(int(tileLoc.Y))
+	if tile, ok := t.Tiles[location]; ok {
+		for _, physicsTile := range PhysicsTiles {
+			if tile.Type == physicsTile {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 func (t *TileMapType) Extract(pairs []types.Pair, keep bool) []Tile {
 	matches := []Tile{}
 
