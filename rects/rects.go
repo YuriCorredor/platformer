@@ -6,7 +6,7 @@ type Rect struct {
 	X, Y, Width, Height float64
 }
 
-func (r *Rect) Coliderect(other Rect) bool {
+func (r *Rect) Colliderect(other Rect) bool {
 	return r.Left() < other.Right() && r.Right() > other.Left() && r.Top() < other.Bottom() && r.Bottom() > other.Top()
 }
 
