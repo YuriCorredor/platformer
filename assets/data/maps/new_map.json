@@ -366,7 +366,7 @@
 "X": 19,
 "Y": 7
 },
-"Variant": 1,
+"Variant": 2,
 "Type": "grass"
 },
 "19;8": {
@@ -380,6 +380,334 @@
 "19;9": {
 "Position": {
 "X": 19,
+"Y": 9
+},
+"Variant": 3,
+"Type": "grass"
+},
+"23;10": {
+"Position": {
+"X": 23,
+"Y": 10
+},
+"Variant": 6,
+"Type": "grass"
+},
+"23;7": {
+"Position": {
+"X": 23,
+"Y": 7
+},
+"Variant": 0,
+"Type": "grass"
+},
+"23;8": {
+"Position": {
+"X": 23,
+"Y": 8
+},
+"Variant": 7,
+"Type": "grass"
+},
+"23;9": {
+"Position": {
+"X": 23,
+"Y": 9
+},
+"Variant": 7,
+"Type": "grass"
+},
+"24;10": {
+"Position": {
+"X": 24,
+"Y": 10
+},
+"Variant": 8,
+"Type": "grass"
+},
+"24;6": {
+"Position": {
+"X": 24,
+"Y": 6
+},
+"Variant": 1,
+"Type": "spawners"
+},
+"24;7": {
+"Position": {
+"X": 24,
+"Y": 7
+},
+"Variant": 1,
+"Type": "grass"
+},
+"24;8": {
+"Position": {
+"X": 24,
+"Y": 8
+},
+"Variant": 8,
+"Type": "grass"
+},
+"24;9": {
+"Position": {
+"X": 24,
+"Y": 9
+},
+"Variant": 8,
+"Type": "grass"
+},
+"25;10": {
+"Position": {
+"X": 25,
+"Y": 10
+},
+"Variant": 8,
+"Type": "grass"
+},
+"25;7": {
+"Position": {
+"X": 25,
+"Y": 7
+},
+"Variant": 1,
+"Type": "grass"
+},
+"25;8": {
+"Position": {
+"X": 25,
+"Y": 8
+},
+"Variant": 8,
+"Type": "grass"
+},
+"25;9": {
+"Position": {
+"X": 25,
+"Y": 9
+},
+"Variant": 8,
+"Type": "grass"
+},
+"26;10": {
+"Position": {
+"X": 26,
+"Y": 10
+},
+"Variant": 8,
+"Type": "grass"
+},
+"26;3": {
+"Position": {
+"X": 26,
+"Y": 3
+},
+"Variant": 0,
+"Type": "stone"
+},
+"26;4": {
+"Position": {
+"X": 26,
+"Y": 4
+},
+"Variant": 7,
+"Type": "stone"
+},
+"26;5": {
+"Position": {
+"X": 26,
+"Y": 5
+},
+"Variant": 7,
+"Type": "stone"
+},
+"26;6": {
+"Position": {
+"X": 26,
+"Y": 6
+},
+"Variant": 7,
+"Type": "stone"
+},
+"26;7": {
+"Position": {
+"X": 26,
+"Y": 7
+},
+"Variant": 1,
+"Type": "grass"
+},
+"26;8": {
+"Position": {
+"X": 26,
+"Y": 8
+},
+"Variant": 8,
+"Type": "grass"
+},
+"26;9": {
+"Position": {
+"X": 26,
+"Y": 9
+},
+"Variant": 8,
+"Type": "grass"
+},
+"27;10": {
+"Position": {
+"X": 27,
+"Y": 10
+},
+"Variant": 8,
+"Type": "grass"
+},
+"27;3": {
+"Position": {
+"X": 27,
+"Y": 3
+},
+"Variant": 1,
+"Type": "stone"
+},
+"27;4": {
+"Position": {
+"X": 27,
+"Y": 4
+},
+"Variant": 5,
+"Type": "stone"
+},
+"27;5": {
+"Position": {
+"X": 27,
+"Y": 5
+},
+"Variant": 5,
+"Type": "stone"
+},
+"27;6": {
+"Position": {
+"X": 27,
+"Y": 6
+},
+"Variant": 5,
+"Type": "stone"
+},
+"27;7": {
+"Position": {
+"X": 27,
+"Y": 7
+},
+"Variant": 1,
+"Type": "grass"
+},
+"27;8": {
+"Position": {
+"X": 27,
+"Y": 8
+},
+"Variant": 8,
+"Type": "grass"
+},
+"27;9": {
+"Position": {
+"X": 27,
+"Y": 9
+},
+"Variant": 8,
+"Type": "grass"
+},
+"28;10": {
+"Position": {
+"X": 28,
+"Y": 10
+},
+"Variant": 8,
+"Type": "grass"
+},
+"28;3": {
+"Position": {
+"X": 28,
+"Y": 3
+},
+"Variant": 2,
+"Type": "stone"
+},
+"28;4": {
+"Position": {
+"X": 28,
+"Y": 4
+},
+"Variant": 3,
+"Type": "stone"
+},
+"28;5": {
+"Position": {
+"X": 28,
+"Y": 5
+},
+"Variant": 3,
+"Type": "stone"
+},
+"28;6": {
+"Position": {
+"X": 28,
+"Y": 6
+},
+"Variant": 3,
+"Type": "stone"
+},
+"28;7": {
+"Position": {
+"X": 28,
+"Y": 7
+},
+"Variant": 1,
+"Type": "grass"
+},
+"28;8": {
+"Position": {
+"X": 28,
+"Y": 8
+},
+"Variant": 8,
+"Type": "grass"
+},
+"28;9": {
+"Position": {
+"X": 28,
+"Y": 9
+},
+"Variant": 8,
+"Type": "grass"
+},
+"29;10": {
+"Position": {
+"X": 29,
+"Y": 10
+},
+"Variant": 4,
+"Type": "grass"
+},
+"29;7": {
+"Position": {
+"X": 29,
+"Y": 7
+},
+"Variant": 2,
+"Type": "grass"
+},
+"29;8": {
+"Position": {
+"X": 29,
+"Y": 8
+},
+"Variant": 3,
+"Type": "grass"
+},
+"29;9": {
+"Position": {
+"X": 29,
 "Y": 9
 },
 "Variant": 3,
@@ -424,6 +752,22 @@
 },
 "Variant": 6,
 "Type": "grass"
+},
+"3;6": {
+"Position": {
+"X": 3,
+"Y": 6
+},
+"Variant": 0,
+"Type": "stone"
+},
+"3;7": {
+"Position": {
+"X": 3,
+"Y": 7
+},
+"Variant": 6,
+"Type": "stone"
 },
 "3;9": {
 "Position": {
@@ -473,6 +817,22 @@
 "Variant": 5,
 "Type": "grass"
 },
+"4;6": {
+"Position": {
+"X": 4,
+"Y": 6
+},
+"Variant": 1,
+"Type": "stone"
+},
+"4;7": {
+"Position": {
+"X": 4,
+"Y": 7
+},
+"Variant": 8,
+"Type": "stone"
+},
 "4;9": {
 "Position": {
 "X": 4,
@@ -520,6 +880,22 @@
 },
 "Variant": 5,
 "Type": "grass"
+},
+"5;6": {
+"Position": {
+"X": 5,
+"Y": 6
+},
+"Variant": 2,
+"Type": "stone"
+},
+"5;7": {
+"Position": {
+"X": 5,
+"Y": 7
+},
+"Variant": 3,
+"Type": "stone"
 },
 "5;9": {
 "Position": {
@@ -778,196 +1154,25 @@
 },
 "Variant": 0,
 "Type": "large_decor"
-}
-]
-}]
-}: {
-"X": 9,
-"Y": 7
-},
-"Variant": 7,
-"Type": "stone"
-},
-"9;8": {
-"Position": {
-"X": 9,
-"Y": 8
-},
-"Variant": 7,
-"Type": "stone"
-},
-"9;9": {
-"Position": {
-"X": 9,
-"Y": 9
-},
-"Variant": 7,
-"Type": "stone"
-}
-},
-"OffGridTiles": [
-{
-"Position": {
-"X": 9.5,
-"Y": 4.5
-},
-"Variant": 0,
-"Type": "large_decor"
 },
 {
 "Position": {
-"X": 16.6875,
-"Y": 4.3125
+"X": 22.75,
+"Y": 4.25
 },
 "Variant": 2,
 "Type": "large_decor"
 },
 {
 "Position": {
-"X": 5.875,
-"Y": 7.3125
-},
-"Variant": 2,
-"Type": "large_decor"
-},
-{
-"Position": {
-"X": 18,
-"Y": 6.5
+"X": 24.6875,
+"Y": 6
 },
 "Variant": 0,
-"Type": "large_decor"
+"Type": "decor"
 }
 ]
-}   "4;13": {
-              "Position": {
-                  "X": 4,
-                  "Y": 13
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "4;14": {
-              "Position": {
-                  "X": 4,
-                  "Y": 14
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "4;9": {
-              "Position": {
-                  "X": 4,
-                  "Y": 9
-              },
-              "Variant": 2,
-              "Type": "decor"
-          },
-          "5;10": {
-              "Position": {
-                  "X": 5,
-                  "Y": 10
-              },
-              "Variant": 1,
-              "Type": "grass"
-          },
-          "5;11": {
-              "Position": {
-                  "X": 5,
-                  "Y": 11
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "5;12": {
-              "Position": {
-                  "X": 5,
-                  "Y": 12
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "5;13": {
-              "Position": {
-                  "X": 5,
-                  "Y": 13
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "5;14": {
-              "Position": {
-                  "X": 5,
-                  "Y": 14
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "5;9": {
-              "Position": {
-                  "X": 5,
-                  "Y": 9
-              },
-              "Variant": 2,
-              "Type": "decor"
-          },
-          "6;10": {
-              "Position": {
-                  "X": 6,
-                  "Y": 10
-              },
-              "Variant": 1,
-              "Type": "grass"
-          },
-          "6;11": {
-              "Position": {
-                  "X": 6,
-                  "Y": 11
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "6;12": {
-              "Position": {
-                  "X": 6,
-                  "Y": 12
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "6;13": {
-              "Position": {
-                  "X": 6,
-                  "Y": 13
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "6;14": {
-              "Position": {
-                  "X": 6,
-                  "Y": 14
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "7;10": {
-              "Position": {
-                  "X": 7,
-                  "Y": 10
-              },
-              "Variant": 1,
-              "Type": "grass"
-          },
-          "7;11": {
-              "Position": {
-                  "X": 7,
-                  "Y": 11
-              },
-              "Variant": 5,
-              "Type": "grass"
-          },
-          "7;12": {
+}          "7;12": {
               "Position": {
                   "X": 7,
                   "Y": 12
